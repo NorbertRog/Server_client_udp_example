@@ -118,7 +118,7 @@ void reciver_main(struct sockaddr_in addr, char *file_path_and_name)
 	int sockfd;
 	char decoded_line[128];
 	char buffer[8];
-	FILE *file;
+	FILE *file = NULL;
 	sockfd = socket(AF_INET, SOCK_DGRAM, 0); 
 	  
 	// connect to server 
@@ -149,7 +149,7 @@ void reciver_main(struct sockaddr_in addr, char *file_path_and_name)
 		recvfrom(sockfd, buffer, sizeof(buffer), 0, (struct sockaddr*)NULL, NULL); 
 		decode_status_binary(buffer, decoded_line, sizeof(decoded_line));
 		printf("%s\n", decoded_line);
-		if(file){
+		if(file!=NULL){
 			fprintf(file, "%s\n", decoded_line);
 			fflush(file);
 		}
